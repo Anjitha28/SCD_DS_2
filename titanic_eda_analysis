@@ -1,0 +1,62 @@
+# Data Cleaning & EDA on Titanic Dataset using "Set1" Palette
+
+# Import Libraries
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Load Dataset
+df = pd.read_csv("train.csv")
+print("Dataset Loaded Successfully!\n")
+print("First 5 Rows:\n", df.head())
+
+# Drop Irrelevant Columns
+df.drop(["PassengerId", "Name", "Ticket", "Cabin"], axis=1, inplace=True)
+print("\n Dropped Columns: PassengerId, Name, Ticket, Cabin")
+
+# Handle Missing Values
+df.fillna({"Age": df["Age"].median(), "Embarked": df["Embarked"].mode()[0]}, inplace=True)
+print(" Filled missing values in 'Age' and 'Embarked'")
+
+# Convert Columns to Category Type
+df["Sex"] = df["Sex"].astype("category")
+df["Embarked"] = df["Embarked"].astype("category")
+df["Pclass"] = df["Pclass"].astype("category")
+print(" Converted 'Sex', 'Embarked', 'Pclass' to category type")
+
+# Save Cleaned Dataset
+df.to_csv("titanic_cleaned.csv", index=False)
+print(" Saved cleaned data as 'titanic_cleaned.csv'")
+files.download("titanic_cleaned.csv")
+
+# Perform EDA Visualizations (all in same template)
+fig, axes = plt.subplots(2, 2, figsize=(15, 12))
+fig.suptitle("Exploratory Data Analysis", fontsize=16, fontweight="bold")
+
+# Set Seaborn style and color palette
+sns.set(style="whitegrid", palette="Set1")
+
+# Plot 1: Survival Count
+sns.countplot(x="Survived", hue="Survived", palette="Set2", data=df, ax=axes[0, 0], legend=False)
+axes[0, 0].set_title("Survival Count")
+axes[0, 0].set_xticks([0, 1])
+axes[0, 0].set_xticklabels(["Did Not Survive", "Survived"])
+
+# Plot 2: Survival by Sex
+sns.countplot(x="Sex", hue="Survived", palette="Set2", data=df, ax=axes[0, 1])
+axes[0, 1].set_title("Survival by Sex")
+axes[0, 1].legend(title="Survived", labels=["No", "Yes"])
+
+# Plot 3: Survival by Passenger Class
+sns.countplot(x="Pclass", hue="Survived", palette="Set2", data=df, ax=axes[1, 0])
+axes[1, 0].set_title("Survival by Passenger Class")
+axes[1, 0].legend(title="Survived", labels=["No", "Yes"])
+
+# Plot 4: Age Distribution by Survival
+sns.histplot(data=df,x="Age",hue="Survived",palette="Set2", multiple="stack", bins=30, ax=axes[1, 1])
+axes[1, 1].set_title("Age Distribution by Survival")
+axes[1, 1].legend(title="Survived", labels=["No", "Yes"])
+
+plt.tight_layout(rect=[0, 0.03, 1, 0.95])
+plt.savefig("titanic_eda_plot.png")
+plt.show()
