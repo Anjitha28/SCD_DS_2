@@ -4,7 +4,7 @@
 <img width="1500" height="1200" alt="titanic_eda_plot" src="https://github.com/user-attachments/assets/417e9b4d-bf81-4153-9d77-5378685d2560" />
 
 # Key Insights 
-This project performs Exploratory Data Analysis (EDA) on the Titanic dataset using Python. The output includes four visualizations:
+This repository contain python project performs Exploratory Data Analysis (EDA) on the Titanic dataset using Python. The output includes four visualizations:
 - Survival count
 - Survival by Sex
 - Survival by Passenger class
