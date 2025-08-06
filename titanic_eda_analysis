@@ -1,4 +1,4 @@
-# Data Cleaning & EDA on Titanic Dataset using "Set1" Palette
+# Data Cleaning & EDA on Titanic Dataset
 
 # Import Libraries
 import pandas as pd
